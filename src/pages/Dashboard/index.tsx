@@ -17,16 +17,13 @@ import Footer from "../../components/Footer";
 
 const Dashboard = () => {
 
-    let { id } = useParams();
-    const { data } = useFetch(`accounts/${id}`)
-
     return (
         <>
             <Header />
             <Container>
-                <InfoSection data={data} />
-                <TransactionListSecton id={id} />
-                <MyTransactionsSection data={data} id={id} />
+                <InfoSection />
+                <TransactionListSecton />
+                <MyTransactionsSection />
                 <Footer />
             </Container>
             <Toaster />

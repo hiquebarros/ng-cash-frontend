@@ -1,6 +1,12 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 import { BalanceBox, UserIcon, Container } from "./styles";
 
-const InfoSection = ({ data }: any) => {
+const InfoSection = () => {
+    const { id } = useParams()
+    const { data } = useFetch(`accounts/${id}`)
     return (
         <Container>
             <div>

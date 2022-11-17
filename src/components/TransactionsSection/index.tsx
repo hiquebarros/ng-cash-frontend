@@ -4,6 +4,7 @@ import axiosInstance from "../../service"
 import TransferModal from "../TransferModal"
 import { Container, Content, ImageBox, List, TransferBox } from "./styles"
 import ngHangLoose from "../../assets/ng-asset.png"
+import { useParams } from "react-router-dom"
 
 interface IUser {
     id: string
@@ -11,7 +12,9 @@ interface IUser {
     password: string
 }
 
-const TransactionListSecton = ({ id }: any) => {
+const TransactionListSecton = () => {
+    let { id } = useParams();
+
     const [users, setUsers] = useState<IUser[]>()
     const [user, setUser] = useState()
 

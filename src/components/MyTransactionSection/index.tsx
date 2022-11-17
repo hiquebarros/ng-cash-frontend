@@ -3,9 +3,14 @@ import axiosInstance from "../../service";
 import Card from "../TransactionCard";
 import { Content, ImageBox, SectionContainer, TransferBox } from "./styles";
 import manhePng from "../../assets/ng-manhe.png"
+import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
-const MyTransactionsSection = ({ data, id }: any) => {
-    const [transactions, setTransactions] = useState<any[]>()
+const MyTransactionsSection = () => {
+    const { id } = useParams()
+    const { data } = useFetch(`accounts/${id}`)
+    const [ transactions, setTransactions ] = useState<any[]>()
+    
     useEffect(() => {
         (
             async function () {
@@ -28,7 +33,7 @@ const MyTransactionsSection = ({ data, id }: any) => {
                 <TransferBox>
                     <h1>Minhas transferências</h1>
                 <ul>
-                    {transactions && transactions.map(item => {
+                    {transactions && data && transactions.map(item => {
                         if (item.debitedAccount.id === data.account.id) {
                             return <li key={item.id}><Card type="out" data={item} /></li>
                         } else {

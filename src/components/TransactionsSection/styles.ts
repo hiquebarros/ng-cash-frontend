@@ -44,6 +44,7 @@ gap: 10px;
 padding: 20px;
 overflow-y: auto;
 max-height: 600px;
+min-height: 400px;
 li{
     cursor: pointer;
     border-radius: 3px;

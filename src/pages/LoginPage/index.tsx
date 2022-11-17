@@ -9,42 +9,52 @@ import Button from '../../components/Button';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useAuth } from "../../providers/AuthContext";
+import axiosInstance from "../../service";
 
-interface ILoginData{
+interface ILoginData {
     username: string
     password: string
 }
 
 const LoginPage = () => {
     const navigate = useNavigate();
-
+    
+    const {setToken} = useAuth()
+    
     const formSchema = yup.object().shape({
         username: yup.string().required("Campo obrigatório!"),
         password: yup.string().required("Campo obrigatório!"),
-      });
+    });
     
-      const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
-
-      const onSubmitFunction = async (data: ILoginData) => {
-          try {
-            const response = await axios.post('http://localhost:3000/users/login/', data)
-            localStorage.setItem('ng-token', response.data.token)
-            const decode: {id: string} = jwt_decode(response.data.token)
-            toast.success('Bem vindo!')
-            setTimeout(() => {
-                navigate(`/dashboard/${decode.id}`)
-           }, 1000);
+    const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
+    
+    const onSubmitFunction = async (data: ILoginData) => {
+        try {
+            (
+                async function () {
+                    const response = await axios.post('http://localhost:3000/users/login/', data)
+                    localStorage.setItem('ng-token', response.data.token)
+                    const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
+                    axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
+                    localStorage.setItem('ng-accountId', decode.accountId)
+                    toast.success('Bem vindo!')
+                    setTimeout(() => {
+                        navigate(`/dashboard/${decode.userId}`)
+                    }, 1000);
+                }
+            )()
         } catch (error: any) {
             toast.error(`${error.response.data.message}`)
         }
-      }
+    }
 
 
     return (
         <Container>
             <Content onSubmit={handleSubmit(onSubmitFunction)}>
                 <TextBox>
-                    <SlLogin size={26} className='icon'/>
+                    <SlLogin size={26} className='icon' />
                     <h2>Login</h2>
                 </TextBox>
                 <FormBox>
@@ -58,7 +68,7 @@ const LoginPage = () => {
                     <Button>Enviar</Button>
                 </ButtonBox>
             </Content>
-            <Toaster position="top-right" containerStyle={{padding: "20px"}} />
+            <Toaster position="top-right" containerStyle={{ padding: "20px" }} />
         </Container>
     );
 }

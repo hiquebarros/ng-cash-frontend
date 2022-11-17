@@ -45,7 +45,7 @@ const TransferModal = ({user}: any) => {
         <Container onSubmit={handleSubmit(onSubmitFunction)}>
             <h1>{`Transferir para: @${user.username}`}</h1>
             <label>Valor:</label>
-            <StyledInput value={inputState} {...register("value")} onChange={(e) => handleChange(currencyMask(e))}/>
+            <StyledInput error={errors.value?.message} value={inputState} {...register("value")} onChange={(e) => handleChange(currencyMask(e))}/>
             <a>{errors.value?.message}</a>
             <Button>Enviar</Button>
         </Container>
