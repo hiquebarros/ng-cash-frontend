@@ -29,7 +29,7 @@ const Card = ({ type, data }: ICardProps) => {
                     <Container>
                         <LeftColumn>
                             <h4>Cash-out</h4>
-                            <h5>{format(parseISO(data.createdAt), 'MM/dd/yyyy')}</h5>
+                            <h5>{date1 + " " + date2}</h5>
                         </LeftColumn>
                         <RightColumn>
                             <h6 style={{color: "var(--red)"}}>- R${data.value.replace(".", ",")}</h6>
