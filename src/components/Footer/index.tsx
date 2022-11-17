@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Final from "./final.png";
-import ngLogo3 from "../../assets/ng-logo3.png";
+import ngLogo3 from "../../assets/ng-logo2.png";
 import { DivLogo, DivRights, DivUp, FooterContainer, FooterContent } from "./styles";
 import UpButton from "./up.png";
 
