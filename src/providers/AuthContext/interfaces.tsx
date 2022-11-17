@@ -5,6 +5,6 @@ export interface IAuthProps{
 }
 
 export interface IAuthData {
-  token: string | undefined;
-  setToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+  user: any
+  setUserFunction: (prop: any) => void
 }

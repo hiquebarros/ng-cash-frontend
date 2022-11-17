@@ -5,6 +5,7 @@ import TransferModal from "../TransferModal"
 import { Container, Content, ImageBox, List, TransferBox } from "./styles"
 import ngHangLoose from "../../assets/ng-asset.png"
 import { useParams } from "react-router-dom"
+import { useModal } from "../../providers/ModalContext"
 
 interface IUser {
     id: string
@@ -16,27 +17,8 @@ const TransactionListSecton = () => {
     let { id } = useParams();
 
     const [users, setUsers] = useState<IUser[]>()
-    const [user, setUser] = useState()
 
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: "100%",
-        maxWidth: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
-    const [open, setOpen] = useState(false);
-    const handleOpen = (user: any) => {
-        setOpen(true);
-        setUser(user)
-    }
-    const handleClose = () => setOpen(false);
+    const {open, handleClose, handleOpen, style, user} = useModal()
 
     useEffect(() => {
         (

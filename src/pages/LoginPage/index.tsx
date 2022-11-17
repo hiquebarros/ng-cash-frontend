@@ -20,14 +20,24 @@ interface ILoginData {
 const LoginPage = () => {
     const navigate = useNavigate();
     
-    const {setToken} = useAuth()
-    
     const formSchema = yup.object().shape({
         username: yup.string().required("Campo obrigatório!"),
         password: yup.string().required("Campo obrigatório!"),
     });
     
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
+
+    const { setUserFunction } = useAuth()
+
+    const fetchUser = async (userId: any) => {
+        console.log('chegou aqui')
+        try {
+            const response = await axiosInstance.get(`http://localhost:3000/accounts/${userId}/`)
+            setUserFunction(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
     const onSubmitFunction = async (data: ILoginData) => {
         try {
@@ -38,6 +48,7 @@ const LoginPage = () => {
                     const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
                     axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
                     localStorage.setItem('ng-accountId', decode.accountId)
+                    await fetchUser(decode.userId)
                     toast.success('Bem vindo!')
                     setTimeout(() => {
                         navigate(`/dashboard/${decode.userId}`)
@@ -48,6 +59,7 @@ const LoginPage = () => {
             toast.error(`${error.response.data.message}`)
         }
     }
+    
 
 
     return (

@@ -4,11 +4,14 @@ import { IAuthData, IAuthProps } from "./interfaces";
 const AuthContext = createContext<IAuthData>({} as IAuthData);
 
 export const AuthProvider = ({ children }: IAuthProps) => {
+  const [user, setUser] = useState()
 
-  const [token, setToken] = useState<string | undefined>()
+ const setUserFunction = (prop: any) => {
+    setUser(prop)
+  }
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ user, setUserFunction }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,11 +5,13 @@ import { Content, ImageBox, SectionContainer, TransferBox } from "./styles";
 import manhePng from "../../assets/ng-manhe.png"
 import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import { useModal } from "../../providers/ModalContext";
 
 const MyTransactionsSection = () => {
     const { id } = useParams()
     const { data } = useFetch(`accounts/${id}`)
     const [ transactions, setTransactions ] = useState<any[]>()
+    const {open} = useModal()
     
     useEffect(() => {
         (
@@ -22,7 +24,7 @@ const MyTransactionsSection = () => {
                 }
             }
         )()
-    }, [])
+    }, [open])
 
     return (
         <SectionContainer>

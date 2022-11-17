@@ -2,9 +2,12 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import axiosInstance from "../service"
 import { useAuth } from "../providers/AuthContext"
+import { useModal } from "../providers/ModalContext"
 
 
 export default function useFetch(url: string){
+
+   const {open} = useModal()
 
     const [data, setData] = useState<any>()
     const [error, setError] = useState(null)
@@ -24,7 +27,7 @@ export default function useFetch(url: string){
                 }
             }
         )()
-    },[])
+    },[open])
 
     return { data, error, loading }
 
