@@ -16,7 +16,7 @@ interface IFormData{
 
 const TransferModal = ({user}: any) => {
 
-    const [inputState, setInputState] = useState<string>()
+    const [inputState, setInputState] = useState<string>("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputState(e.target.value)
