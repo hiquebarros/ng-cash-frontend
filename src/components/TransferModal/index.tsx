@@ -1,7 +1,5 @@
 import Button from "../Button";
-import Input from "../Input";
 import { Container, StyledInput } from "./style"
-import axios from "axios"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,12 +7,15 @@ import React, { useState } from "react";
 import { currencyMask } from "./currencyMask";
 import axiosInstance from "../../service";
 import toast from "react-hot-toast";
+import { useUser } from "../../providers/UserContext";
 
 interface IFormData{
     value: string
 }
 
 const TransferModal = ({user}: any) => {
+
+    const {fetchUser, fetchTransactions} = useUser()
 
     const [inputState, setInputState] = useState<string>("")
 
@@ -36,6 +37,10 @@ const TransferModal = ({user}: any) => {
         try {
             const response = await axiosInstance.post(`/transactions/${user.id}`, req)
             toast.success(`R$ ${response.data.value} foram enviados para ${user.username}`)
+            const userId = localStorage.getItem('ng-userId')
+            fetchUser(userId)
+            fetchTransactions(userId)
+            
         } catch (error) {
             toast.error("Erro")
         }

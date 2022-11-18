@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useAuth } from "../../providers/AuthContext";
+import { useUser } from "../../providers/UserContext";
 import axiosInstance from "../../service";
 
 interface ILoginData {
@@ -27,17 +27,7 @@ const LoginPage = () => {
     
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
 
-    const { setUserFunction } = useAuth()
-
-    const fetchUser = async (userId: any) => {
-        console.log('chegou aqui')
-        try {
-            const response = await axiosInstance.get(`http://localhost:3000/accounts/${userId}/`)
-            setUserFunction(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+     const { fetchUser } = useUser()
     
     const onSubmitFunction = async (data: ILoginData) => {
         try {
@@ -48,7 +38,8 @@ const LoginPage = () => {
                     const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
                     axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
                     localStorage.setItem('ng-accountId', decode.accountId)
-                    await fetchUser(decode.userId)
+                    localStorage.setItem('ng-userId', decode.userId)
+                    fetchUser(decode.userId)
                     toast.success('Bem vindo!')
                     setTimeout(() => {
                         navigate(`/dashboard/${decode.userId}`)

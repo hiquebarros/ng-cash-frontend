@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import axiosInstance from "../service"
-import { useAuth } from "../providers/AuthContext"
+import { useUser } from "../providers/UserContext"
 import { useModal } from "../providers/ModalContext"
 
 

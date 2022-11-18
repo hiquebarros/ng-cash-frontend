@@ -14,7 +14,6 @@ import TransactionListSecton from "../../components/TransactionsSection";
 import MyTransactionsSection from "../../components/MyTransactionSection";
 import Footer from "../../components/Footer";
 
-
 const Dashboard = () => {
 
     return (

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { AuthProvider } from "./AuthContext";
+import { UserProvider } from "./UserContext";
 import { ModalProvider } from "./ModalContext";
 
 export interface IProviders {
@@ -8,7 +8,7 @@ export interface IProviders {
 const Providers = ({ children }: IProviders) => {
   return (
     <ModalProvider>
-      <AuthProvider>{children}</AuthProvider>
+      <UserProvider>{children}</UserProvider>
     </ModalProvider>
   );
 };

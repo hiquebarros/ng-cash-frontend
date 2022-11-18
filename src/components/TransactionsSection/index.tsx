@@ -17,7 +17,7 @@ const TransactionListSecton = () => {
     let { id } = useParams();
 
     const [users, setUsers] = useState<IUser[]>()
-
+    
     const {open, handleClose, handleOpen, style, user} = useModal()
 
     useEffect(() => {
