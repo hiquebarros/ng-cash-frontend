@@ -2,10 +2,11 @@ import { StyledHeader } from "./styles";
 import logo from "../../assets/ng-logo.png"
 import { SlLogout } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../providers/UserContext";
 
 const Header = () => {
     const style = { color: "var(--white)", cursor: "pointer"}
-    const navigate = useNavigate()
+    const { logout } = useUser()
 
     return (
         <StyledHeader>
@@ -13,7 +14,7 @@ const Header = () => {
                 <img src={logo} />
             </div>
             <div>
-                <SlLogout size={34} style={style} onClick={()=> navigate}></SlLogout>
+                <SlLogout size={34} style={style} onClick={()=> logout()}></SlLogout>
             </div>
         </StyledHeader>
     );

@@ -7,15 +7,7 @@ justify-content: center;
 align-items: center;
 background-color: var(--white);
 padding: 0px 10px;
-height: 70vh;
-
-ul{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
-    max-height: 300px;
-}
+padding-bottom: 25vh;
 `
 
 export const Content = styled.div`
@@ -49,13 +41,34 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 flex-basis: 100%;
-gap: 75px;
+gap: 50px;
 
 h1{
     text-align: center;
     font-size: 30px;
 }
+
 ul{
-    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    background-color: whitesmoke;
+    border-radius: 3px;
+    overflow-y: auto;
 }
+
+`
+export const FilterDiv = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    button{
+        padding: 5px;
+        border-radius: 3px;
+        font-family: var(--ibm-sans);
+    }
 `

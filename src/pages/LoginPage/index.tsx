@@ -27,7 +27,7 @@ const LoginPage = () => {
     
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
 
-     const { fetchUser } = useUser()
+     const { fetchUser, setIsAuthenticated } = useUser()
     
     const onSubmitFunction = async (data: ILoginData) => {
         try {
@@ -43,6 +43,7 @@ const LoginPage = () => {
                     toast.success('Bem vindo!')
                     setTimeout(() => {
                         navigate(`/dashboard/${decode.userId}`)
+                        setIsAuthenticated(true)
                     }, 1000);
                 }
             )()
