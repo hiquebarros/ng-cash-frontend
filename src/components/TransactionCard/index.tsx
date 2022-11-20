@@ -1,8 +1,6 @@
 import { Container } from "./styles"
 import { LeftColumn, RightColumn } from "./styles";
 import { format, parseISO } from "date-fns"
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-
 
 interface ICardProps {
     type: string
@@ -10,7 +8,7 @@ interface ICardProps {
 }
 
 const Card = ({ type, data }: ICardProps) => {
-    let date1 = format(parseISO(data.createdAt), 'MM/dd/yyyy')
+    let date1 = format(parseISO(data.createdAt), 'dd/MM/yyyy')
     let date2 = format(parseISO(data.createdAt), 'kk:mm')
     return (
         <>

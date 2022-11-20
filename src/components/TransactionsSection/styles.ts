@@ -44,6 +44,7 @@ gap: 10px;
 padding: 20px;
 overflow-y: auto;
 max-height: 600px;
+min-height: 400px;
 li{
     cursor: pointer;
     border-radius: 3px;
@@ -73,4 +74,13 @@ img{
 @media (min-width: 768px){
     display: flex;
 }
+`
+
+export const AlertDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-grow: 1;
+background-color: transparent;
+color: var(--white);
 `

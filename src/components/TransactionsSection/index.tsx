@@ -1,8 +1,10 @@
-import { Box, Modal } from "@mui/material"
 import { useEffect, useState } from "react"
+import { Box, Modal } from "@mui/material"
+import { useParams } from "react-router-dom"
+import { useModal } from "../../providers/ModalContext"
+import { AlertDiv, Container, Content, ImageBox, List, TransferBox } from "./styles"
 import axiosInstance from "../../service"
 import TransferModal from "../TransferModal"
-import { Container, Content, ImageBox, List, TransferBox } from "./styles"
 import ngHangLoose from "../../assets/ng-asset.png"
 
 interface IUser {
@@ -11,29 +13,12 @@ interface IUser {
     password: string
 }
 
-const TransactionListSecton = ({ id }: any) => {
-    const [users, setUsers] = useState<IUser[]>()
-    const [user, setUser] = useState()
+const TransactionListSecton = () => {
+    let { id } = useParams();
 
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: "100%",
-        maxWidth: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
-
-    const [open, setOpen] = useState(false);
-    const handleOpen = (user: any) => {
-        setOpen(true);
-        setUser(user)
-    }
-    const handleClose = () => setOpen(false);
+    const [ users, setUsers ] = useState<IUser[]>()
+    
+    const {open, handleClose, handleOpen, style, user} = useModal()
 
     useEffect(() => {
         (
@@ -59,6 +44,7 @@ const TransactionListSecton = ({ id }: any) => {
                                 return <li key={item.id} onClick={() => handleOpen(item)}><h5>@{item.username}</h5></li>
                             }
                         })}
+                        {users && users.length < 2 ? (<AlertDiv><p>Não há usuários cadastrados</p></AlertDiv>) : (null)}
                     </List>
                 </TransferBox>
                 <ImageBox>

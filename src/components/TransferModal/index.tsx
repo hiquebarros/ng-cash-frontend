@@ -1,22 +1,20 @@
-import Button from "../Button";
-import Input from "../Input";
+import React, { useState } from "react";
 import { Container, StyledInput } from "./style"
-import axios from "axios"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import React, { useState } from "react";
 import { currencyMask } from "./currencyMask";
+import { useUser } from "../../providers/UserContext";
+import { IFormData, IModalProps } from "./interfaces";
 import axiosInstance from "../../service";
+import Button from "../Button";
+import * as yup from "yup";
 import toast from "react-hot-toast";
 
-interface IFormData{
-    value: string
-}
+const TransferModal = ({user}: IModalProps) => {
 
-const TransferModal = ({user}: any) => {
+    const {fetchUser, fetchTransactions} = useUser()
 
-    const [inputState, setInputState] = useState<string>()
+    const [inputState, setInputState] = useState<string>("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputState(e.target.value)
@@ -36,8 +34,12 @@ const TransferModal = ({user}: any) => {
         try {
             const response = await axiosInstance.post(`/transactions/${user.id}`, req)
             toast.success(`R$ ${response.data.value} foram enviados para ${user.username}`)
-        } catch (error) {
-            toast.error("Erro")
+            const userId = localStorage.getItem('ng-userId')
+            fetchUser(userId)
+            fetchTransactions(userId!)
+            
+        } catch (error: any) {
+            toast.error(error.response.data.message)
         }
       }
 
@@ -45,7 +47,7 @@ const TransferModal = ({user}: any) => {
         <Container onSubmit={handleSubmit(onSubmitFunction)}>
             <h1>{`Transferir para: @${user.username}`}</h1>
             <label>Valor:</label>
-            <StyledInput value={inputState} {...register("value")} onChange={(e) => handleChange(currencyMask(e))}/>
+            <StyledInput error={errors.value?.message} value={inputState} {...register("value")} onChange={(e) => handleChange(currencyMask(e))}/>
             <a>{errors.value?.message}</a>
             <Button>Enviar</Button>
         </Container>
