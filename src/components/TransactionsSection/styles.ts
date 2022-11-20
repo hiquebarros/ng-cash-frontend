@@ -75,3 +75,12 @@ img{
     display: flex;
 }
 `
+
+export const AlertDiv = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-grow: 1;
+background-color: transparent;
+color: var(--white);
+`

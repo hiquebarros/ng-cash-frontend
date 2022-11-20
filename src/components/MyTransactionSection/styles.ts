@@ -41,34 +41,59 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 flex-basis: 100%;
-gap: 50px;
+gap: 40px;
 
 h1{
     text-align: center;
     font-size: 30px;
 }
 
-ul{
+.paginationUl{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 300px;
-    background-color: whitesmoke;
-    border-radius: 3px;
-    overflow-y: auto;
+    max-width: 300px;
+    justify-content: space-between;
+}
+.previousBttn, .nextBttn, .paginationActive{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.paginationPages{
+    cursor: pointer;
 }
 
 `
+
+export const CardWrapper = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+max-width: 300px;
+height: 200px;
+gap: 10px;
+`
+
 export const FilterDiv = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+    max-width: 300px;
 
     button{
         padding: 5px;
         border-radius: 3px;
         font-family: var(--ibm-sans);
     }
+`
+
+export const DateFilterDiv = styled.div`
+display: flex;
+flex-direction: column;
+width: 100%;
+
+input{
+    padding: 5px;
+}
 `

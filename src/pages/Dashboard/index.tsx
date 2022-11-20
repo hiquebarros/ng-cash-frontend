@@ -1,25 +1,24 @@
-import axios from "axios";
 import { useEffect } from "react";
-import { redirect, useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
-import { Container, List, TransferBox } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { Container} from "./styles";
 import { Toaster } from "react-hot-toast";
+import Header from "../../components/Header";
 import InfoSection from "../../components/InfoSection";
 import TransactionListSecton from "../../components/TransactionsSection";
 import MyTransactionsSection from "../../components/MyTransactionSection";
 import Footer from "../../components/Footer";
-import { useUser } from "../../providers/UserContext";
 
 const Dashboard = () => {
 
-    const { isAuthenticated } = useUser()
     let navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            return navigate("/")
+        const token = localStorage.getItem("ng-token")
+        if(!token){
+            navigate('/')
         }
-    }, [isAuthenticated])
+    }, [])
+
 
     return (
         <>

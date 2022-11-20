@@ -1,11 +1,11 @@
-import { Box, Modal } from "@mui/material"
 import { useEffect, useState } from "react"
-import axiosInstance from "../../service"
-import TransferModal from "../TransferModal"
-import { Container, Content, ImageBox, List, TransferBox } from "./styles"
-import ngHangLoose from "../../assets/ng-asset.png"
+import { Box, Modal } from "@mui/material"
 import { useParams } from "react-router-dom"
 import { useModal } from "../../providers/ModalContext"
+import { AlertDiv, Container, Content, ImageBox, List, TransferBox } from "./styles"
+import axiosInstance from "../../service"
+import TransferModal from "../TransferModal"
+import ngHangLoose from "../../assets/ng-asset.png"
 
 interface IUser {
     id: string
@@ -16,7 +16,7 @@ interface IUser {
 const TransactionListSecton = () => {
     let { id } = useParams();
 
-    const [users, setUsers] = useState<IUser[]>()
+    const [ users, setUsers ] = useState<IUser[]>()
     
     const {open, handleClose, handleOpen, style, user} = useModal()
 
@@ -44,6 +44,7 @@ const TransactionListSecton = () => {
                                 return <li key={item.id} onClick={() => handleOpen(item)}><h5>@{item.username}</h5></li>
                             }
                         })}
+                        {users && users.length < 2 ? (<AlertDiv><p>Não há usuários cadastrados</p></AlertDiv>) : (null)}
                     </List>
                 </TransferBox>
                 <ImageBox>

@@ -5,9 +5,28 @@ export interface IModalProps{
 }
 
 export interface IModalData {
-  style: any
+  style: IStyle
   open: boolean
-  handleOpen: any
-  handleClose: any
+  handleOpen: (user: IUser) => void
+  handleClose: () => void
   user: any
+}
+
+export interface IUser {
+  id: string
+  username: string
+  password: string
+}
+
+export interface IStyle {
+    position: "absolute";
+    top: string;
+    left: string;
+    transform: string;
+    width: string;
+    maxWidth: number;
+    bgcolor: string;
+    border: string;
+    boxShadow: number;
+    p: number;
 }

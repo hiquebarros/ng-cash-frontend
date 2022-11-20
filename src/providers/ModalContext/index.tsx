@@ -1,10 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import { IModalData, IModalProps } from "./interfaces";
+import { IModalData, IModalProps, IUser } from "./interfaces";
 
 const ModalContext = createContext<IModalData>({} as IModalData);
 
 export const ModalProvider = ({ children }: IModalProps) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState<IUser | undefined>()
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -21,7 +21,7 @@ export const ModalProvider = ({ children }: IModalProps) => {
 
     const [open, setOpen] = useState(false);
     
-    const handleOpen = (user: any) => {
+    const handleOpen = (user: IUser) => {
         setOpen(true);
         setUser(user)
     }

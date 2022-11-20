@@ -1,8 +1,7 @@
 import { StyledHeader } from "./styles";
-import logo from "../../assets/ng-logo.png"
 import { SlLogout } from "react-icons/sl";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../providers/UserContext";
+import logo from "../../assets/ng-logo.png"
 
 const Header = () => {
     const style = { color: "var(--white)", cursor: "pointer"}

@@ -1,8 +1,6 @@
 import { Container } from "./styles"
 import { LeftColumn, RightColumn } from "./styles";
 import { format, parseISO } from "date-fns"
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-
 
 interface ICardProps {
     type: string

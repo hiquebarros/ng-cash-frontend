@@ -1,13 +1,13 @@
-import Input from "../../components/Input"
-import axios, { AxiosError } from "axios"
+import { ButtonBox, Container, Content, FormBox, SpanBox, TextBox } from './styles';
+import { SlNote } from "react-icons/sl";
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { ButtonBox, Container, Content, FormBox, SpanBox, TextBox } from './styles';
-import { SlNote } from "react-icons/sl";
+import Input from "../../components/Input"
 import Button from '../../components/Button';
-import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 interface IRegisterData{
     username: string

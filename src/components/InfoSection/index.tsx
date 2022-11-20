@@ -1,15 +1,10 @@
-import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
 import { BalanceBox, UserIcon, Container } from "./styles";
 import { useUser } from "../../providers/UserContext";
 import { useEffect } from "react";
-import { useModal } from "../../providers/ModalContext";
 
 const InfoSection = () => {
-    const { id } = useParams()
     const { user, fetchUser } = useUser()
-    const { open } = useModal()
- 
+
     useEffect(() => {
         const userId = localStorage.getItem('ng-userId')
         fetchUser(userId)

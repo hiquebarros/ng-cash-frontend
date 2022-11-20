@@ -1,19 +1,16 @@
-import Button from "../Button";
+import React, { useState } from "react";
 import { Container, StyledInput } from "./style"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import React, { useState } from "react";
 import { currencyMask } from "./currencyMask";
-import axiosInstance from "../../service";
-import toast from "react-hot-toast";
 import { useUser } from "../../providers/UserContext";
+import { IFormData, IModalProps } from "./interfaces";
+import axiosInstance from "../../service";
+import Button from "../Button";
+import * as yup from "yup";
+import toast from "react-hot-toast";
 
-interface IFormData{
-    value: string
-}
-
-const TransferModal = ({user}: any) => {
+const TransferModal = ({user}: IModalProps) => {
 
     const {fetchUser, fetchTransactions} = useUser()
 
@@ -39,10 +36,10 @@ const TransferModal = ({user}: any) => {
             toast.success(`R$ ${response.data.value} foram enviados para ${user.username}`)
             const userId = localStorage.getItem('ng-userId')
             fetchUser(userId)
-            fetchTransactions(userId)
+            fetchTransactions(userId!)
             
-        } catch (error) {
-            toast.error("Erro")
+        } catch (error: any) {
+            toast.error(error.response.data.message)
         }
       }
 

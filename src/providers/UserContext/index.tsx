@@ -1,18 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ITransaction, IUser, IUserData, IUserProps } from "./interfaces";
 import axiosInstance from "../../service";
-import { IUserData, IUserProps } from "./interfaces";
-
-interface IUser {
-  id: string
-  username: string
-  balance: number
-}
 
 const UserContext = createContext<IUserData>({} as IUserData);
 
 export const UserProvider = ({ children }: IUserProps) => {
   const [ user, setUser ] = useState<IUser | null>(null)
-  const [ transactions, setTransactions ] = useState<any[]>([])
+  const [ transactions, setTransactions ] = useState<ITransaction[]>([])
   const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(false)
 
   const fetchUser = async () => {
@@ -61,10 +56,12 @@ export const UserProvider = ({ children }: IUserProps) => {
       console.log(error)
     }
   }
+  
+  const navigate = useNavigate()
 
   const logout = () => {
     localStorage.clear()
-    setIsAuthenticated(false)
+    navigate('/')
   }
 
   return (

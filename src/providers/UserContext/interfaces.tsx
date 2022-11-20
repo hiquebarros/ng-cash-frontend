@@ -5,15 +5,34 @@ export interface IUserProps{
 }
 
 export interface IUserData {
-  user: any
-  setUser: any
+  user: IUser | null
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>
   fetchUser: (userId: string | null) => void
-  fetchTransactions: any
+  fetchTransactions: (userId: string) => void
   fetchCashIn: (userId: string) => void
   fetchCashOut: (userId: string) => void
   fetchByDate: (userId: string, date: string) => void
-  transactions: any[] | undefined
+  transactions: ITransaction[] | undefined
   isAuthenticated: boolean
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
   logout: () => void
+}
+
+export interface IUser {
+  id: string
+  username: string
+  balance: number
+  account: IAccount
+}
+
+export interface IAccount {
+  id: string
+  balance: number
+}
+
+export interface ITransaction {
+  id: string
+  debitedAccount: IAccount
+  creditedAccount: IAccount
+  createdAt: string
 }

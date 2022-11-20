@@ -7,7 +7,7 @@ justify-content: space-between;
 width: 300px;
 background-color: var(--grey);
 border-radius: 3px;
-
+padding: 10px;
 `
 
 export const LeftColumn = styled.div`

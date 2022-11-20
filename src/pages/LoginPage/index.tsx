@@ -1,16 +1,17 @@
-import Input from "../../components/Input"
-import axios from "axios"
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useEffect } from "react";
 import { ButtonBox, Container, Content, FormBox, SpanBox, TextBox } from './styles';
 import { SlLogin } from "react-icons/sl";
-import Button from '../../components/Button';
-import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useUser } from "../../providers/UserContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"
 import axiosInstance from "../../service";
+import Input from "../../components/Input"
+import Button from '../../components/Button';
+import * as yup from "yup";
+import toast, { Toaster } from 'react-hot-toast';
+import jwt_decode from "jwt-decode";
 
 interface ILoginData {
     username: string
@@ -19,16 +20,25 @@ interface ILoginData {
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    
+
     const formSchema = yup.object().shape({
         username: yup.string().required("Campo obrigatório!"),
         password: yup.string().required("Campo obrigatório!"),
     });
-    
+
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
 
-     const { fetchUser, setIsAuthenticated } = useUser()
-    
+    const { fetchUser, setIsAuthenticated } = useUser()
+
+    useEffect(()=> {
+        const token = localStorage.getItem("ng-token")
+        const userId = localStorage.getItem("ng-userId")
+        if(token){
+            return navigate(`/dashboard/${userId}`)
+        }
+    })
+   
+
     const onSubmitFunction = async (data: ILoginData) => {
         try {
             (
@@ -51,7 +61,7 @@ const LoginPage = () => {
             toast.error(`${error.response.data.message}`)
         }
     }
-    
+
 
 
     return (
