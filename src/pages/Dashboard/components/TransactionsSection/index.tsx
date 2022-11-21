@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Box, Modal } from "@mui/material"
 import { useParams } from "react-router-dom"
-import { useModal } from "../../providers/ModalContext"
+import { useModal } from "../../../../providers/ModalContext"
 import { AlertDiv, Container, Content, ImageBox, List, TransferBox } from "./styles"
-import axiosInstance from "../../service"
-import TransferModal from "../TransferModal"
-import ngHangLoose from "../../assets/ng-asset.png"
+import axiosInstance from "../../../../service"
+import TransferModal from "../../../../components/TransferModal"
+import ngHangLoose from "../../../../assets/ng-asset.png"
 
 interface IUser {
     id: string

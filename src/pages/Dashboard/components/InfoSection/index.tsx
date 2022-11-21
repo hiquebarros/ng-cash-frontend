@@ -1,5 +1,5 @@
 import { BalanceBox, UserIcon, Container } from "./styles";
-import { useUser } from "../../providers/UserContext";
+import { useUser } from "../../../../providers/UserContext";
 import { useEffect } from "react";
 
 const InfoSection = () => {

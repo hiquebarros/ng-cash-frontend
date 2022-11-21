@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Input from "../../components/Input"
 import Button from '../../components/Button';
 import axios from "axios"
+import Header from '../../components/Header';
 
 interface IRegisterData{
     username: string
@@ -19,7 +20,7 @@ const RegistrationPage = () => {
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Campo obrigatório!"),
-        password: yup.string().required("Campo obrigatório!"),
+        password: yup.string().required("Campo obrigatório!").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mínimo 8 caracteres, um maiúsculo, um número e um caracter especial")
       });
     
       const { register, handleSubmit, formState: { errors } } = useForm<IRegisterData>({ resolver: yupResolver(formSchema) });
@@ -39,6 +40,8 @@ const RegistrationPage = () => {
 
 
     return (
+        <>
+        <Header />
         <Container>
             <Content onSubmit={handleSubmit(onSubmitFunction)}>
                 <TextBox>
@@ -58,6 +61,7 @@ const RegistrationPage = () => {
             </Content>
             <Toaster position="top-right" containerStyle={{padding: "20px"}} />
         </Container>
+        </>
     );
 }
 

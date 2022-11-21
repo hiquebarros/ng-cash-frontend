@@ -17,7 +17,7 @@ const TransferModal = ({user}: IModalProps) => {
     const [inputState, setInputState] = useState<string>("")
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputState(e.target.value)
+        setInputState(currencyMask(e))
     }
 
     const formSchema = yup.object().shape({
@@ -27,10 +27,11 @@ const TransferModal = ({user}: IModalProps) => {
       const { register, handleSubmit, formState: { errors } } = useForm<IFormData>({ resolver: yupResolver(formSchema) });
 
       const onSubmitFunction = async (data: IFormData) => {
-        const valueNumber = parseFloat(data.value)
+        const valueNumber = data.value
         const req = {
-            value: valueNumber
+            value: valueNumber.replace(".", "").replaceAll(",", "").replace("00", "")
         }
+        
         try {
             const response = await axiosInstance.post(`/transactions/${user.id}`, req)
             toast.success(`R$ ${response.data.value} foram enviados para ${user.username}`)
@@ -47,7 +48,7 @@ const TransferModal = ({user}: IModalProps) => {
         <Container onSubmit={handleSubmit(onSubmitFunction)}>
             <h1>{`Transferir para: @${user.username}`}</h1>
             <label>Valor:</label>
-            <StyledInput error={errors.value?.message} value={inputState} {...register("value")} onChange={(e) => handleChange(currencyMask(e))}/>
+            <StyledInput error={errors.value?.message} value={inputState} {...register("value")} onChange={(e) => handleChange(e)}/>
             <a>{errors.value?.message}</a>
             <Button>Enviar</Button>
         </Container>

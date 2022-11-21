@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import * as yup from "yup";
 import toast, { Toaster } from 'react-hot-toast';
 import jwt_decode from "jwt-decode";
+import Header from "../../components/Header";
 
 interface ILoginData {
     username: string
@@ -23,40 +24,36 @@ const LoginPage = () => {
 
     const formSchema = yup.object().shape({
         username: yup.string().required("Campo obrigatório!"),
-        password: yup.string().required("Campo obrigatório!"),
+        password: yup.string().required("Campo obrigatório!").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mínimo 8 caracteres, um maiúsculo, um número e um caracter especial")
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
 
     const { fetchUser, setIsAuthenticated } = useUser()
 
-    useEffect(()=> {
+    useEffect(() => {
         const token = localStorage.getItem("ng-token")
         const userId = localStorage.getItem("ng-userId")
-        if(token){
+        if (token) {
             return navigate(`/dashboard/${userId}`)
         }
-    })
-   
+    }, [])
+
 
     const onSubmitFunction = async (data: ILoginData) => {
         try {
-            (
-                async function () {
-                    const response = await axios.post('http://localhost:3000/users/login/', data)
-                    localStorage.setItem('ng-token', response.data.token)
-                    const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
-                    axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
-                    localStorage.setItem('ng-accountId', decode.accountId)
-                    localStorage.setItem('ng-userId', decode.userId)
-                    fetchUser(decode.userId)
-                    toast.success('Bem vindo!')
-                    setTimeout(() => {
-                        navigate(`/dashboard/${decode.userId}`)
-                        setIsAuthenticated(true)
-                    }, 1000);
-                }
-            )()
+            const response = await axios.post('http://localhost:3000/users/login/', data)
+            localStorage.setItem('ng-token', response.data.token)
+            const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
+            axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
+            localStorage.setItem('ng-accountId', decode.accountId)
+            localStorage.setItem('ng-userId', decode.userId)
+            fetchUser(decode.userId)
+            toast.success('Bem vindo!')
+            setTimeout(() => {
+                navigate(`/dashboard/${decode.userId}`)
+                setIsAuthenticated(true)
+            }, 1000);
         } catch (error: any) {
             toast.error(`${error.response.data.message}`)
         }
@@ -65,6 +62,8 @@ const LoginPage = () => {
 
 
     return (
+        <>
+        <Header />
         <Container>
             <Content onSubmit={handleSubmit(onSubmitFunction)}>
                 <TextBox>
@@ -84,6 +83,7 @@ const LoginPage = () => {
             </Content>
             <Toaster position="top-right" containerStyle={{ padding: "20px" }} />
         </Container>
+        </>
     );
 }
 

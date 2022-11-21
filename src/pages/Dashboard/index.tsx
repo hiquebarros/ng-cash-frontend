@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Container} from "./styles";
 import { Toaster } from "react-hot-toast";
 import Header from "../../components/Header";
-import InfoSection from "../../components/InfoSection";
-import TransactionListSecton from "../../components/TransactionsSection";
-import MyTransactionsSection from "../../components/MyTransactionSection";
+import InfoSection from "./components/InfoSection";
+import TransactionListSecton from "./components/TransactionsSection";
+import MyTransactionsSection from "./components/MyTransactionSection";
 import Footer from "../../components/Footer";
 
 const Dashboard = () => {
@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header />
+            <Header dashboard={true}/>
             <Container>
                 <InfoSection />
                 <TransactionListSecton />

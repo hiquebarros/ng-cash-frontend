@@ -4,9 +4,9 @@ export const Container = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
-height: 100vh;
+height: calc(100vh - 80px);
 width: 100%;
-background-color: var(--grey);
+background-color: var(--);
 `
 
 export const Content = styled.form`

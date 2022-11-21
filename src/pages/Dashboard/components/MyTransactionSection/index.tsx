@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { CardWrapper, Content, DateFilterDiv, FilterDiv, ImageBox, SectionContainer, TransferBox } from "./styles";
-import { useUser } from "../../providers/UserContext";
+import { useUser } from "../../../../providers/UserContext";
 import { format } from "date-fns/esm";
 import { parseISO } from "date-fns";
-import Card from "../TransactionCard";
-import manhePng from "../../assets/ng-manhe.png"
+import Card from "../../../../components/TransactionCard";
+import manhePng from "../../../../assets/ng-manhe.png"
 import ReactPaginate from "react-paginate";
 
 const MyTransactionsSection = () => {
