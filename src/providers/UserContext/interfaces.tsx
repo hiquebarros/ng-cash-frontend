@@ -7,14 +7,12 @@ export interface IUserProps{
 export interface IUserData {
   user: IUser | null
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>
-  fetchUser: (userId: string | null) => void
-  fetchTransactions: (userId: string) => void
-  fetchCashIn: (userId: string) => void
-  fetchCashOut: (userId: string) => void
-  fetchByDate: (userId: string, date: string) => void
+  fetchUser: (userId: string | null) => Promise<void>
+  fetchTransactions: (userId: string) => Promise<void>
+  fetchCashIn: (userId: string) => Promise<void>
+  fetchCashOut: (userId: string) => Promise<void>
+  fetchByDate: (userId: string, date: string) => Promise<void>
   transactions: ITransaction[] | undefined
-  isAuthenticated: boolean
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
   logout: () => void
 }
 

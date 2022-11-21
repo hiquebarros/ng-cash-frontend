@@ -9,6 +9,7 @@ import Input from "../../components/Input"
 import Button from '../../components/Button';
 import axios from "axios"
 import Header from '../../components/Header';
+import axiosInstance from '../../service';
 
 interface IRegisterData{
     username: string
@@ -27,7 +28,7 @@ const RegistrationPage = () => {
 
       const onSubmitFunction = async (data: IRegisterData) => {
           try {
-            await axios.post('http://localhost:3000/users/', data)
+            await axiosInstance.post('http://localhost:3000/users/', data)
             toast.success('Conta criada!')
             setTimeout(() => {
                 navigate('/')
@@ -53,7 +54,7 @@ const RegistrationPage = () => {
                     <Input type='password' error={errors.password?.message} label={"password"} name={"password"} register={register}></Input>
                 </FormBox>
                 <SpanBox>
-                    <button onClick={() => navigate("/")}>Já possui uma conta?</button>
+                    <button type="button" onClick={() => navigate("/")}>Já possui uma conta?</button>
                 </SpanBox>
                 <ButtonBox>
                     <Button>Enviar</Button>
