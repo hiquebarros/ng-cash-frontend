@@ -8,7 +8,6 @@ const UserContext = createContext<IUserData>({} as IUserData);
 export const UserProvider = ({ children }: IUserProps) => {
   const [ user, setUser ] = useState<IUser | null>(null)
   const [ transactions, setTransactions ] = useState<ITransaction[]>([])
-  const [ isAuthenticated, setIsAuthenticated ] = useState<boolean>(false)
 
   const fetchUser = async () => {
     const userId = localStorage.getItem("ng-userId")
@@ -65,7 +64,7 @@ export const UserProvider = ({ children }: IUserProps) => {
   }
 
   return (
-    <UserContext.Provider value={{ user, setUser, fetchTransactions, transactions, fetchUser, fetchCashIn, fetchCashOut, fetchByDate, isAuthenticated, setIsAuthenticated, logout }}>
+    <UserContext.Provider value={{ user, setUser, fetchTransactions, transactions, fetchUser, fetchCashIn, fetchCashOut, fetchByDate, logout }}>
       {children}
     </UserContext.Provider>
   );

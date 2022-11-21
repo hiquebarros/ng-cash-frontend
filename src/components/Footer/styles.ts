@@ -11,16 +11,16 @@ export const FooterContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 15px;
+  padding: 0 20px;
   align-items: center;
-  justify-content: space-between;
   height: 200px;
   max-width: 1750px;
 
   @media (min-width: 768px) {
     flex-direction: row;
     gap: unset;
+    justify-content: space-between;
   }
 `;
 

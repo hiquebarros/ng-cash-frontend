@@ -11,7 +11,6 @@ import Input from "../../components/Input"
 import Button from '../../components/Button';
 import * as yup from "yup";
 import toast, { Toaster } from 'react-hot-toast';
-import jwt_decode from "jwt-decode";
 import Header from "../../components/Header";
 
 interface ILoginData {
@@ -23,13 +22,16 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     const formSchema = yup.object().shape({
-        username: yup.string().required("Campo obrigatório!"),
-        password: yup.string().required("Campo obrigatório!").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,"Mínimo 8 caracteres, um maiúsculo, um número e um caracter especial")
+        username: yup.string().required("Campo obrigatório!").min(3, "Username deve ter no mímino 3 caracteres"),
+        password: yup.string().required("Campo obrigatório!")
+        .min(8, "Sua senha deve conter ao menos 8 caracteres")
+        .matches(/.*\d/, "Sua senha deve conter ao menos um dígito")
+        .matches(/.*[A-Z]/, "Sua senha deve conter ao menos uma letra maiúscula")
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm<ILoginData>({ resolver: yupResolver(formSchema) });
 
-    const { fetchUser, setIsAuthenticated } = useUser()
+    const { fetchUser } = useUser()
 
     useEffect(() => {
         const token = localStorage.getItem("ng-token")
@@ -42,17 +44,15 @@ const LoginPage = () => {
 
     const onSubmitFunction = async (data: ILoginData) => {
         try {
-            const response = await axios.post('http://localhost:3000/users/login/', data)
+            const response = await axiosInstance.post('http://localhost:3000/users/login/', data)
             localStorage.setItem('ng-token', response.data.token)
-            const decode: { userId: string, accountId: string } = await jwt_decode(response.data.token)
+            localStorage.setItem('ng-accountId', response.data.accountId)
+            localStorage.setItem('ng-userId', response.data.userId)
             axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.token}`
-            localStorage.setItem('ng-accountId', decode.accountId)
-            localStorage.setItem('ng-userId', decode.userId)
-            fetchUser(decode.userId)
+            await fetchUser(response.data.userId)
             toast.success('Bem vindo!')
             setTimeout(() => {
-                navigate(`/dashboard/${decode.userId}`)
-                setIsAuthenticated(true)
+                navigate(`/dashboard/${response.data.userId}`)
             }, 1000);
         } catch (error: any) {
             toast.error(`${error.response.data.message}`)
@@ -75,7 +75,7 @@ const LoginPage = () => {
                     <Input type='password' error={errors.password?.message} label={"password"} name={"password"} register={register}></Input>
                 </FormBox>
                 <SpanBox>
-                    <button onClick={() => navigate("/register")}>Ainda não possui conta?</button>
+                    <button type="button" onClick={() => navigate("/register")}>Ainda não possui conta?</button>
                 </SpanBox>
                 <ButtonBox>
                     <Button>Enviar</Button>
